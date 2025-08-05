@@ -1,0 +1,6 @@
+🐳 Docker : Dockerfiles, volumes, réseaux, restart policies.
+🧩 Docker Compose : syntaxe, services, dépendances.
+🔐 TLS : configuration de NGINX avec TLSv1.2/1.3.
+🛠️ Makefile : automatisation des commandes Docker.
+🗃️ MariaDB : installation, configuration, création de base.
+🖥️ WordPress + php-fpm : installation, configuration sans serveur web.
