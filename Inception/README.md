@@ -22,7 +22,7 @@ start [-ai] [C_ID], stop [C_ID], exec -it [C_ID] bash
 cp [C_ID]:[src] [dst]
 
 mapper: run -it [--rm] -v [path/volume]:[D_path] [I_NAME]
-manager ( run-le comme mapper ) ( docker volume + ): create [name], ls, rm [V_NAME], inspect [V_NAME]
+manager ( run-le comme mapper ) ( docker volume + ): create [V_NAME], ls, rm [V_NAME], inspect [V_NAME]
 -p [my_port]:[service_port]
 
 ( network + ): ls, create [N_NAME], run [...] --network=[N_NAME] --name=[name] [I_NAME]
@@ -30,6 +30,14 @@ build -t [C_name] [path du Dockerfile], tag [I_name] [username/repository], push
 ```
 
 * Installer docker-compose:
+```
+apt install docker-compose
+```
+-> Commandes: ( docker compose + ):
+```
+up [-d] [--build], stop, rm [C_NAME]
+```
+-> Creer un volume pour stocker les datas. Pour voir ce fichier en dehors, fais comme si tu mapper ( donc tu crees une copie. )
 
 # EOF
 
