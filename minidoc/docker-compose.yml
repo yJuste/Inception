@@ -1,9 +1,0 @@
-# Mapper un volume
-services:
-        orange:
-                image: celtak/ubuntu-ping-ip
-                container_name: celtak_ubuntu
-                stdin_open: true
-                tty: true
-                volumes:
-                       - ./data:/data
