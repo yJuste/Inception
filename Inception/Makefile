@@ -1,11 +1,11 @@
 up:
-	docker compose up --build
+	docker compose -f srcs/docker-compose.yml up --build
 
 stop:
-	docker compose stop
+	docker compose -f srcs/docker-compose.yml stop
 
 restart:
-	docker compose stop
-	docker compose up --build
+	docker compose -f srcs/docker-compose.yml stop
+	docker compose -f srcs/docker-compose.yml up --build
 
 .PHONY: up stop restart

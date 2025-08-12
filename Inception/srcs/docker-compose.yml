@@ -1,9 +1,9 @@
 services:
         nginx:
-                image: nginx:latest
+                image: nginx:1.28.0
                 container_name: nginx
-                build: ./srcs/nginx
+                build: ./requirements/nginx
                 ports:
                         - "80:80"
                 volumes:
-                        - ./logs/nginx:/var/log/nginx
+                        - ../logs/nginx:/var/log/nginx
