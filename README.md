@@ -39,6 +39,20 @@ up [-d] [--build], stop, rm [C_NAME]
 ```
 -> Creer un volume pour stocker les datas. Pour voir ce fichier en dehors, fais comme si tu mapper ( donc tu crees une copie. )
 
+* Lancer le site:
+
+connexion avec curl:
+
+```
+curl http://localhost
+```
+-> Connexion sans tls
+
+```
+curl -k https://localhost
+curl -k https://jlongin.42.fr
+```
+
 # EOF
 
 Modifié le 3 Aout 2025

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-service mysql start
+mysqld_safe --skip-networking &
+sleep 5
 
 # Initialise la database
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
