@@ -4,8 +4,10 @@ RUN apt-get update
 RUN apt-get upgrade
 RUN apt-get install -y mariadb-server
 
+COPY tools/start.sh /tmp/start.sh
+RUN chmod +x /tmp/start.sh
+
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-COPY tools/mariadb-start.sh /etc/mysql/mariadb-start.sh
-RUN chmod +x /etc/mysql/mariadb-start.sh
-CMD ["/etc/mysql/mariadb-start.sh"]
+ENTRYPOINT ["bash", "/tmp/start.sh"]
+CMD ["mysqld_safe"]

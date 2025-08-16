@@ -4,7 +4,8 @@ services:
                 container_name: nginx
                 build: ./requirements/nginx
                 env_file: .env
-                restart: on-failure
+                depends_on:
+                        - wordpress
                 ports:
                         - "443:443"
                 volumes:
@@ -12,12 +13,14 @@ services:
                         - wordpress_data:/var/www/html
                 networks:
                         - inception-net
+                restart: on-failure
         wordpress:
                 image: wordpress:inception
                 container_name: wordpress
                 build: ./requirements/wordpress
                 env_file: .env
-                restart: on-failure
+                expose:
+                        - "9000"
                 depends_on:
                         - mariadb
                 volumes:
@@ -25,26 +28,20 @@ services:
                         - wordpress_data:/var/www/html
                 networks:
                         - inception-net
-                expose:
-                        - "9000"
+                restart: on-failure
         mariadb:
                 image: mariadb:inception
                 container_name: mariadb
                 build: ./requirements/mariadb
                 env_file: .env
-                environment:
-                        MYSQL_DATABASE: ${SQL_DATABASE}
-                        MYSQL_USER: ${SQL_USER}
-                        MYSQL_PASSWORD: ${SQL_PASSWORD}
-                        MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
-                restart: on-failure
-                ports:
-                        - "3306:3306"
+                expose:
+                        - "3306"
                 volumes:
                         - ../logs/mariadb:/var/log/mysql
                         - mariadb_data:/var/lib/mysql
                 networks:
                         - inception-net
+                restart: on-failure
 
 volumes:
         wordpress_data:
