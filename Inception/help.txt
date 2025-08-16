@@ -1,0 +1,118 @@
+/////////////////////////////////////////////////////////////////////////////////
+//                                 HELP.TXT                                    //
+/////////////////////////////////////////////////////////////////////////////////
+
+//	Pour copier facilement dans ma VM sur debian:
+-> Aussi ce sont toutes les variables d'environnement à compléter pour lancer
+Inception sur votre machine.
+
+# Mysql
+DATABASE_NAME=
+MYSQL_USER=
+MYSQL_PASSWORD=
+MYSQL_ROOT_USER=
+MYSQL_ROOT_PASSWORD=
+MYSQL_HOSTNAME=
+
+# Ssl
+SSL_COUNTRY=
+SSL_STATE=
+SSL_LOCALITY=
+SSL_ORGANIZATION=
+SSL_ORGANIZATION_UNIT=
+SSL_USER_ID=
+
+SSL_CRT=
+SSL_KEY=
+
+# Wordpress
+DOMAIN_NAME=
+WP_TITLE=
+
+WP_ADM_USER=
+WP_ADM_PASSWORD=
+WP_ADM_EMAIL=
+
+WP_USER=
+WP_USER_PASSWORD=
+WP_USER_EMAIL=
+
+/////////////////////////////////////////////////////////////////////////////////
+//                             POUR EVALUATION                                 //
+/////////////////////////////////////////////////////////////////////////////////
+
+//	A connaitre pour l'evaluation:
+
+// Lancer docker sur debian ( le reinstaller ):
+```
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+// Lancer docker sur macos:
+```
+open -a Docker					# pour le lancer
+osascript -e 'quit app "Docker"'		# pour quitter
+```
+
+// Connexion sans TLS avec curl:
+```
+curl http://localhost
+```
+
+// Connexion avec TLS avec curl:
+```
+curl -k -I https://login.42.fr
+curl -k -I https://localhost
+```
+
+// Montre les utilisateurs de la base de données mariadb:
+```
+docker exec -it mariadb bash
+mysql -u root -p
+SHOW DATABASES;
+USE [NAME];
+SELECT ID, user_login, user_email FROM wp_users;
+```
+
+// Montre les utilisateurs de wordpress:
+```
+docker exec -it wordpress bash
+wp user list --allow-root
+```
+
+// Pour tester les autres ports:
+```
+curl -k -I https://localhost:443
+curl -k -I https://localhost:123
+```
+
+// Se connecter en public:
+- Trouver l'ip de la machine hote qui servira de serveur ( oui ce n'est pas le docker-compose mais bien le hardware qu'on cherche. )
+```
+curl ifconfig.me	-> public
+ifconfig		-> local ( cherche en0 -> inet ipv4 )
+```
+
+// Attention les volumes sont dans /home/login/... sur Linux mais sur Mac c'est différent et ils sont dans /Users/login/...
+
+/////////////////////////////////////////////////////////////////////////////////
+//                                     EOF                                     //
+/////////////////////////////////////////////////////////////////////////////////
+
+Modifié 16 Aout 2025

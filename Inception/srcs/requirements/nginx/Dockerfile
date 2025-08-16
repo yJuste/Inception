@@ -1,14 +1,18 @@
-FROM debian:12
+FROM debian:bookworm
 
-RUN apt update && apt upgrade && apt install -y nginx
+RUN apt-get update
+RUN apt-get upgrade
+RUN apt-get install -y nginx
+RUN apt-get install -y openssl
+RUN rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /etc/nginx/ssl
-RUN apt install vim -y
-RUN apt install curl -y
-RUN apt install openssl -y
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Perpignan/O=42/OU=42/CN=jlongin.42.fr/UID=jlongin"
-RUN mkdir -p /var/run/nginx
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY conf/index.html /var/www/html
+
 RUN chmod 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html
+
+# Création d'un certificat, auto-signé, sans password
+COPY --chmod=755 tools/ssl_init.sh /usr/local/bin/ssl_init.sh
+COPY --chmod=755 conf/nginx.conf /etc/nginx/nginx.template
+
+ENTRYPOINT ["/usr/local/bin/ssl_init.sh"]
 CMD ["nginx", "-g", "daemon off;"]
