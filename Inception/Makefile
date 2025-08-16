@@ -11,14 +11,10 @@ stop:
 	docker compose -f $(COMPOSE_FILE) down -v --remove-orphans
 
 clear: stop
-	if docker image inspect mariadb:inception >/dev/null 2>&1; then \
-		docker rmi -f mariadb:inception; fi
-	if docker image inspect wordpress:inception >/dev/null 2>&1; then \
-		docker rmi -f wordpress:inception; fi
-	if docker image inspect nginx:inception >/dev/null 2>&1; then \
-		docker rmi -f nginx:inception; fi
-	if docker image inspect redis:inception >/dev/null 2>&1; then \
-		docker rmi -f redis:inception; fi
+	docker rmi -f mariadb:inception;
+	docker rmi -f wordpress:inception;
+	docker rmi -f nginx:inception;
+	docker rmi -f redis:inception;
 
 restart: clear up
 
