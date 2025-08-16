@@ -53,6 +53,8 @@ curl -k https://localhost
 curl -k https://jlongin.42.fr
 ```
 
+* Attention les volumes sont dans /home/login/... sur Linux mais sur Mac c'est différent et ils sont dans /Users/login/...
+
 # EOF
 
 Modifié le 3 Aout 2025

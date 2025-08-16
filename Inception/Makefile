@@ -1,11 +1,22 @@
+COMPOSE_FILE = srcs/docker-compose.yml
+
 up:
-	docker compose -f srcs/docker-compose.yml up --build
+	mkdir -p $(HOME)/data/mysql
+	mkdir -p $(HOME)/data/wordpress
+	mkdir -p $(HOME)/data/mariadb
+	docker compose -f $(COMPOSE_FILE) up --build
 
 stop:
-	docker compose -f srcs/docker-compose.yml stop
+	if [ -d "$(HOME)/data/mysql" ]; then rm -r "$(HOME)/data/mysql"; fi
+	if [ -d "$(HOME)/data/wordpress" ]; then rm -r "$(HOME)/data/wordpress"; fi
+	if [ -d "$(HOME)/data/mariadb" ]; then rm -r "$(HOME)/data/mariadb"; fi
+	docker compose -f $(COMPOSE_FILE) down -v --remove-orphans
 
-restart:
-	docker compose -f srcs/docker-compose.yml stop
-	docker compose -f srcs/docker-compose.yml up --build
+clear: stop
+	docker rmi -f mariadb:inception
+	docker rmi -f wordpress:inception
+	docker rmi -f nginx:inception
+
+restart: clear up
 
 .PHONY: up stop restart

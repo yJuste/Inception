@@ -1,9 +1,65 @@
 services:
         nginx:
-                image: nginx:1.28.0
+                image: nginx:inception
                 container_name: nginx
                 build: ./requirements/nginx
+                env_file: .env
+                restart: on-failure
                 ports:
                         - "443:443"
                 volumes:
                         - ../logs/nginx:/var/log/nginx
+                        - wordpress_data:/var/www/html
+                networks:
+                        - inception-net
+        wordpress:
+                image: wordpress:inception
+                container_name: wordpress
+                build: ./requirements/wordpress
+                env_file: .env
+                restart: on-failure
+                depends_on:
+                        - mariadb
+                volumes:
+                        - ../logs/wordpress:/var/log
+                        - wordpress_data:/var/www/html
+                networks:
+                        - inception-net
+                expose:
+                        - "9000"
+        mariadb:
+                image: mariadb:inception
+                container_name: mariadb
+                build: ./requirements/mariadb
+                env_file: .env
+                environment:
+                        MYSQL_DATABASE: ${SQL_DATABASE}
+                        MYSQL_USER: ${SQL_USER}
+                        MYSQL_PASSWORD: ${SQL_PASSWORD}
+                        MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+                restart: on-failure
+                ports:
+                        - "3306:3306"
+                volumes:
+                        - ../logs/mariadb:/var/log/mysql
+                        - mariadb_data:/var/lib/mysql
+                networks:
+                        - inception-net
+
+volumes:
+        wordpress_data:
+                driver: local
+                driver_opts:
+                        type: 'none'
+                        o: 'bind'
+                        device: '${HOME}/data/wordpress'
+        mariadb_data:
+                driver: local
+                driver_opts:
+                        type: 'none'
+                        o: 'bind'
+                        device: '${HOME}/data/mariadb'
+
+networks:
+        inception-net:
+                driver: bridge
