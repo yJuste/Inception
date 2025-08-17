@@ -109,6 +109,23 @@ curl ifconfig.me	-> public
 ifconfig		-> local ( cherche en0 -> inet ipv4 )
 ```
 
+// Acceder a Adminer:
+```
+https://jlongin.42.fr/adminer/
+Server : ${MYSQL_HOSTNAME}
+Username: ${MYSQL_USERNAME}
+Password: ${MYSQL_PASSWORD}
+Database: ${DATABASE_NAME}
+```
+
+// Acceder a Wordpress-Admin:
+```
+https://jlongin.42.fr/wp-admin
+Login: ${WP_USER}
+Password: ${WP_USER_PASSWORD}
+```
+
+
 // Attention les volumes sont dans /home/login/... sur Linux mais sur Mac c'est différent et ils sont dans /Users/login/...
 
 /////////////////////////////////////////////////////////////////////////////////

@@ -34,7 +34,7 @@ if [ ! -f ./wp-config.php ]; then
     wp theme install lowfi \
         --activate \
         --path=/var/www/html \
-        --allow-root
+	--allow-root
 
     # Redis
     wp config set WP_REDIS_HOST redis \

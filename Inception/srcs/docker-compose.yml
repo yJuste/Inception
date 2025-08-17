@@ -2,10 +2,11 @@ services:
         nginx:
                 image: nginx:inception
                 container_name: nginx
-                build: ./requirements/nginx
+                build: requirements/nginx
                 env_file: .env
                 depends_on:
                         - wordpress
+                        - adminer
                 ports:
                         - "443:443"
                 volumes:
@@ -17,7 +18,7 @@ services:
         wordpress:
                 image: wordpress:inception
                 container_name: wordpress
-                build: ./requirements/wordpress
+                build: requirements/wordpress
                 env_file: .env
                 expose:
                         - "9000"
@@ -32,7 +33,7 @@ services:
         mariadb:
                 image: mariadb:inception
                 container_name: mariadb
-                build: ./requirements/mariadb
+                build: requirements/mariadb
                 env_file: .env
                 expose:
                         - "3306"
@@ -45,10 +46,22 @@ services:
         redis:
                 image: redis:inception
                 container_name: redis
-                build: ./requirements/bonus/redis
+                build: requirements/bonus/redis
                 env_file: .env
-                ports:
-                        - "6379:6379"
+                expose:
+                        - "6379"
+                networks:
+                        - inception-net
+                restart: on-failure
+        adminer:
+                image: adminer:inception
+                container_name: adminer
+                build: requirements/bonus/adminer
+                env_file: .env
+                depends_on:
+                        - mariadb
+                expose:
+                        - "8080"
                 networks:
                         - inception-net
                 restart: on-failure
