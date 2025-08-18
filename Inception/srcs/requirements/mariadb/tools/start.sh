@@ -1,5 +1,9 @@
 #!/bin/bash
 
+FILE=/var/log/mysql/all.log
+[ -f "$FILE" ] || touch "$FILE"
+chown mysql:mysql "$FILE"
+
 mysqld_safe &
 until mysqladmin ping --silent; do sleep 1; done
 

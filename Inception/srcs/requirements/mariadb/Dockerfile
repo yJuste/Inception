@@ -9,6 +9,7 @@ COPY tools/start.sh /tmp/start.sh
 RUN chmod +x /tmp/start.sh
 
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY conf/51-combined.cnf /etc/mysql/mariadb.conf.d/50-combined.cnf
 
 ENTRYPOINT ["bash", "/tmp/start.sh"]
 CMD ["mysqld_safe"]

@@ -17,7 +17,7 @@ https://docs.docker.com/engine/install/ubuntu/
 -> Commandes ( C_ -> 'container', I_ -> 'image', V_ -> 'volume', N_ -> 'network' D_ -> 'docker itself' ) ( docker + ) :
 ```
 help, -v, ps -a, images, rm [C_ID],  rmi [I_ID]
-run [--rm] -it [I_NAME]
+docker build -t [I_NAME] [dossier], run [--rm] -it [I_NAME]
 start [-ai] [C_ID], stop [C_ID], exec -it [C_ID] bash
 cp [C_ID]:[src] [dst]
 
@@ -41,4 +41,4 @@ up [-d] [--build], stop, rm [C_NAME]
 
 # EOF
 
-Modifié le 3 Aout 2025
+Modifié le 16 Aout 2025

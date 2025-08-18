@@ -1,26 +1,27 @@
-COMPOSE_FILE = srcs/docker-compose.yml
+COMPOSE_FILE := srcs/docker-compose.yml
+DC := docker compose -f $(COMPOSE_FILE)
 
-# Lance Inception
 up:
-	mkdir -p $(HOME)/data/wordpress
-	mkdir -p $(HOME)/data/mariadb
-	docker compose -f $(COMPOSE_FILE) up --build
+	$(DC) start || true
+	$(DC) up --remove-orphans
 
-# Supprime les containers liés à inception
+build: down
+	mkdir -p $(HOME)/data/wordpress $(HOME)/data/mariadb
+	$(DC) up --build --remove-orphans
+
+down: clear
+	if [ -d "$(HOME)/data/wordpress" ]; then rm -rf "$(HOME)/data/wordpress"; fi
+	if [ -d "$(HOME)/data/mariadb" ]; then rm -rf "$(HOME)/data/mariadb"; fi
+	$(DC) down -v --remove-orphans
+
 clear:
-	docker rmi -f mariadb:inception;
-	docker rmi -f wordpress:inception;
-	docker rmi -f nginx:inception;
-	docker rmi -f redis:inception;
-	docker rmi -f adminer:inception;
+	docker images 'mariadb:inception' -q | xargs -r docker rmi -f
+	docker images 'wordpress:inception' -q | xargs -r docker rmi -f
+	docker images 'nginx:inception' -q | xargs -r docker rmi -f
+	docker images 'redis:inception' -q | xargs -r docker rmi -f
+	docker images 'adminer:inception' -q | xargs -r docker rmi -f
+	docker images 'ftp:inception' -q | xargs -r docker rmi -f
 
-# Clean et relance
-restart: clear up
+restart: build
 
-# Supprime la base de données, ferme les containers, clean tout
-stop: clear
-	if [ -d "$(HOME)/data/wordpress" ]; then rm -r "$(HOME)/data/wordpress"; fi
-	if [ -d "$(HOME)/data/mariadb" ]; then rm -r "$(HOME)/data/mariadb"; fi
-	docker compose -f $(COMPOSE_FILE) down -v --remove-orphans
-
-.PHONY: up clear restart stop
+.PHONY: up build clear stop restart

@@ -37,6 +37,9 @@ WP_USER=
 WP_USER_PASSWORD=
 WP_USER_EMAIL=
 
+FTP_USER=
+FTP_PASSWORD=
+
 /////////////////////////////////////////////////////////////////////////////////
 //                             POUR EVALUATION                                 //
 /////////////////////////////////////////////////////////////////////////////////
@@ -125,6 +128,30 @@ Login: ${WP_USER}
 Password: ${WP_USER_PASSWORD}
 ```
 
+// Acceder a ftp:
+```
+lftp -u ${FTP_USER},${FTP_PASSWORD} ftp://127.0.0.1
+ftp > ls
+```
+-> ajouter un fichier sur le site:
+```
+curl --ftp-create-dirs -T ./mon_fichier.txt \
+     ftp://${FTP_USER}:${FTP_PASSWORD}@${DOMAIN_NAME}/www/mon_fichier.txt
+```
+-> recuperer un fichier sur le site:
+```
+curl -k -O https://${DOMAIN_NAME}/mon_fichier.txt
+curl -k -o [autre_nom] https://${DOMAIN_NAME}/mon_fichier.txt
+```
+par ftp:
+```
+curl -u ${FTP_USER}:${FTP_PASSWORD} -O ftp://${DOMAIN_NAME}/mon_fichier.txt
+```
+
+* Pour reprendre un transfer interrompu:
+```
+-C -
+```
 
 // Attention les volumes sont dans /home/login/... sur Linux mais sur Mac c'est différent et ils sont dans /Users/login/...
 
@@ -132,4 +159,4 @@ Password: ${WP_USER_PASSWORD}
 //                                     EOF                                     //
 /////////////////////////////////////////////////////////////////////////////////
 
-Modifié 16 Aout 2025
+Modifié 18 Aout 2025
