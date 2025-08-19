@@ -22,6 +22,7 @@ clear:
 	docker images 'adminer:inception' -q | xargs -r docker rmi -f
 	docker images 'ftp:inception' -q | xargs -r docker rmi -f
 	docker images 'mariabackup:inception' -q | xargs -r docker rmi -f
+	docker images 'static_site:inception' -q | xargs -r docker rmi -f
 
 restart: build
 

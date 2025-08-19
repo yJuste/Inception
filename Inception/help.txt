@@ -153,10 +153,15 @@ curl -u ${FTP_USER}:${FTP_PASSWORD} -O ftp://${DOMAIN_NAME}/mon_fichier.txt
 -C -
 ```
 
+* Une backup de mariadb est faite toutes les heures. Pour changer en minute il faut changeer dans backup-cron :
+```
+0 * * ... --> * * * ...
+```
+
 // Attention les volumes sont dans /home/login/... sur Linux mais sur Mac c'est différent et ils sont dans /Users/login/...
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                     EOF                                     //
 /////////////////////////////////////////////////////////////////////////////////
 
-Modifié 18 Aout 2025
+Modifié 19 Aout 2025

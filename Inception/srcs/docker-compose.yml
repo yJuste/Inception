@@ -97,6 +97,16 @@ services:
                 networks:
                         - inception-net
                 restart: on-failure
+        static_site:
+                image: static_site:inception
+                container_name: static_site
+                build: requirements/bonus/static_site
+                env_file: .env
+                expose:
+                        - "80"
+                networks:
+                        - inception-net
+                restart: on-failure
 
 volumes:
         wordpress_vol:
