@@ -14,7 +14,7 @@ down: clear
 	if [ -d "$(HOME)/data/mariadb" ]; then rm -rf "$(HOME)/data/mariadb"; fi
 	$(DC) down -v --remove-orphans
 
-clear:
+clear: stop
 	docker images 'mariadb:inception' -q | xargs -r docker rmi -f
 	docker images 'wordpress:inception' -q | xargs -r docker rmi -f
 	docker images 'nginx:inception' -q | xargs -r docker rmi -f
@@ -23,7 +23,9 @@ clear:
 	docker images 'ftp:inception' -q | xargs -r docker rmi -f
 	docker images 'mariabackup:inception' -q | xargs -r docker rmi -f
 	docker images 'static_site:inception' -q | xargs -r docker rmi -f
+stop:
+	$(DC) stop || true
 
 restart: build
 
-.PHONY: up build clear stop restart
+.PHONY: up build down clear stop restart
