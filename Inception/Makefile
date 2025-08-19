@@ -21,7 +21,7 @@ clear:
 	docker images 'redis:inception' -q | xargs -r docker rmi -f
 	docker images 'adminer:inception' -q | xargs -r docker rmi -f
 	docker images 'ftp:inception' -q | xargs -r docker rmi -f
-	docker images 'backup:inception' -q | xargs -r docker rmi -f
+	docker images 'mariabackup:inception' -q | xargs -r docker rmi -f
 
 restart: build
 

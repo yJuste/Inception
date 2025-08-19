@@ -25,4 +25,4 @@ mariabackup --prepare --quiet --target-dir="${TARGET}"
 tar czf "/backups/${DATE}.tar.gz" -C /backups "${DATE}"
 rm -rf "${TARGET}"
 
-echo -e "\033[32mBackup OK -> ${TARGET}\033[0m"
+echo -e "\033[32mBackup [OK] -> ${TARGET}\033[0m"

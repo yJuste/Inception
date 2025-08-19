@@ -1,7 +1,6 @@
 FROM debian:bookworm
 
-RUN apt-get update
-RUN apt-get upgrade
+RUN apt-get update && apt-get upgrade
 RUN apt-get install -y redis-server
 RUN rm -rf /var/lib/apt/lists/*
 

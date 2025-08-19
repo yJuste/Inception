@@ -1,10 +1,9 @@
 FROM debian:bookworm
 
-RUN apt-get update
-RUN apt-get upgrade
-RUN apt-get install -y nginx
-RUN apt-get install -y openssl
+RUN apt-get update && apt-get upgrade
+RUN apt-get install -y nginx openssl
 RUN rm -rf /var/lib/apt/lists/*
+
 RUN mkdir -p /etc/nginx/ssl
 
 RUN chmod 755 /var/www/html
