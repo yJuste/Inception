@@ -4,15 +4,13 @@ adduser --disabled-password --gecos "" "${FTP_USER}"
 
 echo "${FTP_USER}:${FTP_PASSWORD}" | chpasswd
 
-getent group www-data >/dev/null 2>&1 || groupadd -r www-data
 usermod -aG www-data "${FTP_USER}"
 
 mkdir -p "/home/${FTP_USER}/ftp"
-chgrp -R www-data "/home/${FTP_USER}/ftp"
-chmod 2775 "/home/${FTP_USER}/ftp"
 
-find "/home/${FTP_USER}/ftp" -type d -exec chmod 775 {} \;
-find "/home/${FTP_USER}/ftp" -type f -exec chmod 664 {} \;
+chgrp -R www-data "/home/${FTP_USER}/ftp"
+# Le '2' de chmod signifie: tous nouveaux fichiers seront dans le groupe www-data
+chmod 2775 "/home/${FTP_USER}/ftp"
 
 cat >> /etc/vsftpd.conf <<-EOF
 	user_sub_token=${FTP_USER}
