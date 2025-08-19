@@ -12,6 +12,7 @@ build: down
 down: clear
 	if [ -d "$(HOME)/data/wordpress" ]; then rm -rf "$(HOME)/data/wordpress"; fi
 	if [ -d "$(HOME)/data/mariadb" ]; then rm -rf "$(HOME)/data/mariadb"; fi
+	if [ -d "$(HOME)/data "]; then rm -rf "${HOME}/data"; fi
 	$(DC) down -v --remove-orphans
 
 clear: stop
