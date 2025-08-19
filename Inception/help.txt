@@ -174,4 +174,6 @@ tar -tf [backup_name].tar.gz	# voir les fichiers sans décompresser
 //                                     EOF                                     //
 /////////////////////////////////////////////////////////////////////////////////
 
+* Merci au logiciel Mobirise qui m'a permis de créer un site static en html/css/js visuellement.
+
 Modifié 19 Aout 2025
