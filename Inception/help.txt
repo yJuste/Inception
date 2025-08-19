@@ -80,9 +80,10 @@ curl http://localhost
 
 // Connexion avec TLS avec curl:
 ```
-curl -k -I https://login.42.fr
+curl -k -I https://${DOMAIN_NAME}
 curl -k -I https://localhost
 ```
+ps: Dans Inception le domain name doit s'appeler quelque chose comme; login.42.fr
 
 // Montre les utilisateurs de la base de données mariadb:
 ```
@@ -114,7 +115,7 @@ ifconfig		-> local ( cherche en0 -> inet ipv4 )
 
 // Acceder a Adminer:
 ```
-https://jlongin.42.fr/adminer/
+https://${DOMAIN_NAME}/adminer/
 Server : ${MYSQL_HOSTNAME}
 Username: ${MYSQL_USERNAME}
 Password: ${MYSQL_PASSWORD}
@@ -123,7 +124,7 @@ Database: ${DATABASE_NAME}
 
 // Acceder a Wordpress-Admin:
 ```
-https://jlongin.42.fr/wp-admin
+https://${DOMAIN_NAME}/wp-admin
 Login: ${WP_USER}
 Password: ${WP_USER_PASSWORD}
 ```
