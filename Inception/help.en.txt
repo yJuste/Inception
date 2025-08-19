@@ -8,10 +8,17 @@
 ```
 127.0.0.1 ${DOMAIN_NAME}
 ```
+-> Add the login as root:
+```
+usermod -aG docker jlongin
+groups					# to see
+[ Exit the VM and restart it ]
+```
 -> The Inception project was developed on both Mac & Debian, so it works on both platforms!
 -> To make the project work, you must have:
 	- installed `docker compose`.
 	- added `127.0.0.1 ${DOMAIN_NAME}` in your machine’s /etc/hosts file.
+	- add the login to the root group: `usermod -aG docker [login]`
 	- defined the environment variables in the `srcs/.env` file
 		- `.env` is a hidden file.
 		- values must be glued together, e.g.: `DATABASE_NAME=mariadb`.
