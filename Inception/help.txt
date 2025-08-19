@@ -158,6 +158,11 @@ curl -u ${FTP_USER}:${FTP_PASSWORD} -O ftp://${DOMAIN_NAME}/mon_fichier.txt
 ```
 0 * * ... --> * * * ...
 ```
+* Mes backups sont compressé, pour décompresser il faut écrire:
+```
+tar -xf [backup_name].tar.gz
+tar -tf [backup_name].tar.gz	# voir les fichiers sans décompresser
+```
 
 // Attention les volumes sont dans /home/login/... sur Linux mais sur Mac c'est différent et ils sont dans /Users/login/...
 
