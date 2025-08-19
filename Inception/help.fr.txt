@@ -2,13 +2,24 @@
 //                                 HELP.TXT                                    //
 /////////////////////////////////////////////////////////////////////////////////
 
-//	Pour copier facilement dans ma VM sur debian:
--> Aussi ce sont toutes les variables d'environnement à compléter pour lancer
-Inception sur votre machine.
+* Les points essentiels:
+
 -> Ne pas oublier d'ajouter dans /etc/hosts de votre machine la ligne ( cela permet de créer un alias de localhost pour votre domain_name. )
 ```
 127.0.0.1 ${DOMAIN_NAME}
 ```
+-> Le projet Inception a été réalisé sur Mac & Debian, donc sur les 2 plateformes, ça marche !
+-> Pour que le projet fonctionne, vous devez avoir fait :
+	- installer `docker compose`.
+	- ajouter `127.0.0.1 ${DOMAIN_NAME}` dans /etc/hosts de votre machine.
+	- définir les variables d'environnement dans le fichier `srcs/.env`
+		- `.env` est un fichier caché.
+		- les valeurs doivent être collées, ex : `DATABASE_NAME=mariadb`.
+	- le ${HOME} de Mac est `Users/votre_user` ; contrairement à Debian où c'est `/home/votre_user`
+
+//	Pour copier facilement dans ma VM sur Debian :
+
+-> Aussi, ce sont toutes les variables d'environnement à compléter pour lancer Inception sur votre machine.
 
 # Mysql
 DATABASE_NAME=
@@ -39,18 +50,20 @@ WP_USER=
 WP_USER_PASSWORD=
 WP_USER_EMAIL=
 
+# Ftp
 FTP_USER=
 FTP_PASSWORD=
 
+# Others
 CONTINENT=
 
 /////////////////////////////////////////////////////////////////////////////////
-//                             POUR EVALUATION                                 //
+//                              POUR EVALUATION                                //
 /////////////////////////////////////////////////////////////////////////////////
 
-//	A connaitre pour l'evaluation:
+//	À connaître pour l'évaluation :
 
-// Lancer docker sur debian ( le reinstaller ):
+// Lancer Docker sur Debian (le réinstaller) :
 ```
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
 
@@ -71,7 +84,7 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-// Lancer docker sur macos:
+// Lancer Docker sur Macos:
 ```
 open -a Docker					# pour le lancer
 osascript -e 'quit app "Docker"'		# pour quitter
@@ -87,9 +100,9 @@ curl http://localhost
 curl -k -I https://${DOMAIN_NAME}
 curl -k -I https://localhost
 ```
-ps: Dans Inception le domain name doit s'appeler quelque chose comme; login.42.fr
+ps : Dans Inception, le domain name doit s'appeler quelque chose comme ; login.42.fr
 
-// Montre les utilisateurs de la base de données mariadb:
+// Montre les utilisateurs de la base de données MariaDB :
 ```
 docker exec -it mariadb bash
 mysql -u root -p
@@ -98,7 +111,7 @@ USE [NAME];
 SELECT ID, user_login, user_email FROM wp_users;
 ```
 
-// Montre les utilisateurs de wordpress:
+// Montre les utilisateurs de Wordpress :
 ```
 docker exec -it wordpress bash
 wp user list --allow-root
@@ -111,13 +124,13 @@ curl -k -I https://localhost:123
 ```
 
 // Se connecter en public:
-- Trouver l'ip de la machine hote qui servira de serveur ( oui ce n'est pas le docker-compose mais bien le hardware qu'on cherche. )
+-> Trouver l'IP de la machine hôte qui servira de serveur (oui ce n'est pas le docker-compose mais bien le hardware qu'on cherche.)
 ```
 curl ifconfig.me	-> public
 ifconfig		-> local ( cherche en0 -> inet ipv4 )
 ```
 
-// Acceder a Adminer:
+// Accéder à Adminer :
 ```
 https://${DOMAIN_NAME}/adminer/
 Server : ${MYSQL_HOSTNAME}
@@ -126,49 +139,49 @@ Password: ${MYSQL_PASSWORD}
 Database: ${DATABASE_NAME}
 ```
 
-// Acceder a Wordpress-Admin:
+// Accéder à Wordpress-Admin :
 ```
 https://${DOMAIN_NAME}/wp-admin
 Login: ${WP_USER}
 Password: ${WP_USER_PASSWORD}
 ```
 
-// Acceder a ftp:
+// Accéder à ftp :
 ```
 lftp -u ${FTP_USER},${FTP_PASSWORD} ftp://127.0.0.1
 ftp > ls
 ```
--> ajouter un fichier sur le site:
+-> ajouter un fichier sur le site :
 ```
 curl --ftp-create-dirs -T ./mon_fichier.txt \
      ftp://${FTP_USER}:${FTP_PASSWORD}@${DOMAIN_NAME}/www/mon_fichier.txt
 ```
--> recuperer un fichier sur le site:
+-> récupérer un fichier sur le site :
 ```
 curl -k -O https://${DOMAIN_NAME}/mon_fichier.txt
 curl -k -o [autre_nom] https://${DOMAIN_NAME}/mon_fichier.txt
 ```
-par ftp:
+avec ftp:
 ```
 curl -u ${FTP_USER}:${FTP_PASSWORD} -O ftp://${DOMAIN_NAME}/mon_fichier.txt
 ```
 
-* Pour reprendre un transfer interrompu:
+* Pour reprendre un transfert interrompu :
 ```
 -C -
 ```
 
-* Une backup de mariadb est faite toutes les heures. Pour changer en minute il faut changeer dans backup-cron :
+* Une backup de MariaDB est faite toutes les heures. Pour changer en minute, il faut changer dans backup-cron :
 ```
 0 * * ... --> * * * ...
 ```
-* Mes backups sont compressé, pour décompresser il faut écrire:
+* Mes backups sont compressés, pour les décompresser il faut écrire :
 ```
 tar -xf [backup_name].tar.gz
 tar -tf [backup_name].tar.gz	# voir les fichiers sans décompresser
 ```
 
-// Attention les volumes sont dans /home/login/... sur Linux mais sur Mac c'est différent et ils sont dans /Users/login/...
+// Attention : les volumes sur Linux sont dans `/home/login/data` mais sur Mac c'est différent et ils sont dans `/Users/login/data`.
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                     EOF                                     //
@@ -176,4 +189,4 @@ tar -tf [backup_name].tar.gz	# voir les fichiers sans décompresser
 
 * Merci au logiciel Mobirise qui m'a permis de créer un site static en html/css/js visuellement.
 
-Modifié 19 Aout 2025
+Modifié 19 Août 2025

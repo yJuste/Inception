@@ -9,8 +9,8 @@ mkdir -p "$TARGET"
 mkdir -p /var/lib/mysql
 
 until mariadb -h"${MYSQL_HOSTNAME}" -P3306 -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1" &>/dev/null; do
-	echo "Attente de MariaDB..."
-	sleep 2
+	echo "Waiting MariaDB..."
+	sleep 1
 done
 
 mariabackup --backup \

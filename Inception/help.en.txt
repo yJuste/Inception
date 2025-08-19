@@ -1,0 +1,192 @@
+/////////////////////////////////////////////////////////////////////////////////
+//                                 HELP.TXT                                    //
+/////////////////////////////////////////////////////////////////////////////////
+
+* Key points:
+
+-> Don’t forget to add the following line in /etc/hosts on your machine (this creates an alias from localhost to your domain_name.)
+```
+127.0.0.1 ${DOMAIN_NAME}
+```
+-> The Inception project was developed on both Mac & Debian, so it works on both platforms!
+-> To make the project work, you must have:
+	- installed `docker compose`.
+	- added `127.0.0.1 ${DOMAIN_NAME}` in your machine’s /etc/hosts file.
+	- defined the environment variables in the `srcs/.env` file
+		- `.env` is a hidden file.
+		- values must be glued together, e.g.: `DATABASE_NAME=mariadb`.
+	- on Mac, ${HOME} is `Users/your_user`; whereas on Debian it's `/home/your_user`
+
+//	To easily copy into my VM on Debian:
+
+-> These are also all the environment variables to complete in order to run Inception on your machine.
+
+# Mysql
+DATABASE_NAME=
+MYSQL_USER=
+MYSQL_PASSWORD=
+MYSQL_HOSTNAME=
+
+# Ssl
+SSL_COUNTRY=
+SSL_STATE=
+SSL_LOCALITY=
+SSL_ORGANIZATION=
+SSL_ORGANIZATION_UNIT=
+SSL_USER_ID=
+
+SSL_CRT=
+SSL_KEY=
+
+# Wordpress
+DOMAIN_NAME=
+WP_TITLE=
+
+WP_ADM_USER=
+WP_ADM_PASSWORD=
+WP_ADM_EMAIL=
+
+WP_USER=
+WP_USER_PASSWORD=
+WP_USER_EMAIL=
+
+# Ftp
+FTP_USER=
+FTP_PASSWORD=
+
+# Others
+CONTINENT=
+
+/////////////////////////////////////////////////////////////////////////////////
+//                               FOR EVALUATION                                //
+/////////////////////////////////////////////////////////////////////////////////
+
+//	What you need to know for evaluation:
+
+// Launch Docker on Debian (reinstall it):
+```
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+// Launch Docker on macOS:
+```
+open -a Docker					# to start it
+osascript -e 'quit app "Docker"'		# to quit it
+```
+
+// Connection without TLS using curl:
+```
+curl http://localhost
+```
+
+// Connection with TLS using curl:
+```
+curl -k -I https://${DOMAIN_NAME}
+curl -k -I https://localhost
+```
+ps: In Inception, the domain name should be something like: login.42.fr
+
+// Show users in the MariaDB database:
+```
+docker exec -it mariadb bash
+mysql -u root -p
+SHOW DATABASES;
+USE [NAME];
+SELECT ID, user_login, user_email FROM wp_users;
+```
+
+// Show Wordpress users:
+```
+docker exec -it wordpress bash
+wp user list --allow-root
+```
+
+// To test other ports:
+```
+curl -k -I https://localhost:443
+curl -k -I https://localhost:123
+```
+
+// Public access:
+-> Find the IP of the host machine that will act as the server (yes, it’s not docker-compose but the actual hardware we're looking for.)
+```
+curl ifconfig.me	-> public
+ifconfig		-> local ( look for en0 -> inet ipv4 )
+```
+
+// Access Adminer:
+```
+https://${DOMAIN_NAME}/adminer/
+Server : ${MYSQL_HOSTNAME}
+Username: ${MYSQL_USERNAME}
+Password: ${MYSQL_PASSWORD}
+Database: ${DATABASE_NAME}
+```
+
+// Access Wordpress Admin:
+```
+https://${DOMAIN_NAME}/wp-admin
+Login: ${WP_USER}
+Password: ${WP_USER_PASSWORD}
+```
+
+// Access ftp:
+```
+lftp -u ${FTP_USER},${FTP_PASSWORD} ftp://127.0.0.1
+ftp > ls
+```
+-> upload a file to the site:
+```
+curl --ftp-create-dirs -T ./my_file.txt \
+     ftp://${FTP_USER}:${FTP_PASSWORD}@${DOMAIN_NAME}/www/my_file.txt
+```
+-> download a file from the site:
+```
+curl -k -O https://${DOMAIN_NAME}/my_file.txt
+curl -k -o [autre_nom] https://${DOMAIN_NAME}/my_file.txt
+```
+using ftp:
+```
+curl -u ${FTP_USER}:${FTP_PASSWORD} -O ftp://${DOMAIN_NAME}/my_file.txt
+```
+
+* To resume a broken transfer:
+```
+-C -
+```
+
+* A MariaDB backup is made every hour. To switch to minutes, change this in backup-cron:
+```
+0 * * ... --> * * * ...
+```
+* My backups are compressed; to decompress them, run:
+```
+tar -xf [backup_name].tar.gz
+tar -tf [backup_name].tar.gz		# view files without decompressing
+```
+
+// Warning: on Linux, volumes are in `/home/login/data`, but on Mac it's different: they're in `/Users/login/data`.
+
+/////////////////////////////////////////////////////////////////////////////////
+//                                     EOF                                     //
+/////////////////////////////////////////////////////////////////////////////////
+
+* Thanks to the Mobirise software that helped me visually build a static site in html/css/js.
+
+Modified August 19, 2025

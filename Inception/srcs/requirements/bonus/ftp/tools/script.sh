@@ -9,7 +9,7 @@ usermod -aG www-data "${FTP_USER}"
 mkdir -p "/home/${FTP_USER}/ftp"
 
 chgrp -R www-data "/home/${FTP_USER}/ftp"
-# Le '2' de chmod signifie: tous nouveaux fichiers seront dans le groupe www-data
+# The '2' in chmod means: all new files will belong to the www-data group
 chmod 2775 "/home/${FTP_USER}/ftp"
 
 cat >> /etc/vsftpd.conf <<-EOF

@@ -5,7 +5,7 @@ sed -e "s|{SSL_CRT}|${SSL_CRT}|g" \
     -e "s|{DOMAIN_NAME}|${DOMAIN_NAME}|g" \
     /etc/nginx/nginx.template > /etc/nginx/nginx.conf
 
-# Création d'un certificat, auto-signé, sans password
+# Creating a self-signed certificate, without a password
 if [ ! -f ${SSL_CRT} ];
 then
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
