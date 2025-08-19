@@ -4,7 +4,7 @@ RUN apt-get update && apt-get upgrade
 RUN apt-get install -y mariadb-backup mariadb-client ca-certificates tzdata cron
 RUN rm -rf /var/lib/apt/lists/*
 
-ENV TZ=${CONTINENT}/${STATE}
+ENV TZ=$CONTINENT/$STATE
 
 COPY --chmod=755 tools/backup.sh /usr/local/bin/backup.sh
 RUN chmod +x /usr/local/bin/backup.sh

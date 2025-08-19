@@ -14,6 +14,7 @@ mysql -u root <<-EOSQL
 	GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO '${MYSQL_USER}'@'%';
 	FLUSH PRIVILEGES;
 EOSQL
-        mysqladmin shutdown
+
+mysqladmin shutdown
 
 exec "$@"
