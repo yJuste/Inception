@@ -76,10 +76,26 @@ services:
                         - "21:21"
                 depends_on:
                         - wordpress
-                networks:
-                        - inception-net
                 volumes:
                         - wordpress_vol:/home/${FTP_USER}/ftp
+                networks:
+                        - inception-net
+                restart: on-failure
+        backup:
+                image: backup:inception
+                container_name: backup
+                build: requirements/bonus/backup
+                env_file: .env
+                environment:
+                        CONTINENT: ${CONTINENT}
+                        STATE: ${SSL_STATE}
+                depends_on:
+                        - mariadb
+                volumes:
+                        - mariadb_vol:/var/lib/mysql
+                        - ../backups:/backups
+                networks:
+                        - inception-net
                 restart: on-failure
 
 volumes:

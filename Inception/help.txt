@@ -10,8 +10,6 @@ Inception sur votre machine.
 DATABASE_NAME=
 MYSQL_USER=
 MYSQL_PASSWORD=
-MYSQL_ROOT_USER=
-MYSQL_ROOT_PASSWORD=
 MYSQL_HOSTNAME=
 
 # Ssl
@@ -39,6 +37,8 @@ WP_USER_EMAIL=
 
 FTP_USER=
 FTP_PASSWORD=
+
+CONTINENT=
 
 /////////////////////////////////////////////////////////////////////////////////
 //                             POUR EVALUATION                                 //

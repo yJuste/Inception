@@ -1,5 +1,5 @@
-COMPOSE_FILE := srcs/docker-compose.yml
-DC := docker compose -f $(COMPOSE_FILE)
+COMPOSE_FILE= srcs/docker-compose.yml
+DC= docker compose -f $(COMPOSE_FILE)
 
 up:
 	$(DC) start || true
@@ -21,6 +21,7 @@ clear:
 	docker images 'redis:inception' -q | xargs -r docker rmi -f
 	docker images 'adminer:inception' -q | xargs -r docker rmi -f
 	docker images 'ftp:inception' -q | xargs -r docker rmi -f
+	docker images 'backup:inception' -q | xargs -r docker rmi -f
 
 restart: build
 
