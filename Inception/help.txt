@@ -5,6 +5,10 @@
 //	Pour copier facilement dans ma VM sur debian:
 -> Aussi ce sont toutes les variables d'environnement à compléter pour lancer
 Inception sur votre machine.
+-> Ne pas oublier d'ajouter dans /etc/hosts de votre machine la ligne ( cela permet de créer un alias de localhost pour votre domain_name. )
+```
+127.0.0.1 ${DOMAIN_NAME}
+```
 
 # Mysql
 DATABASE_NAME=
