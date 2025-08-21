@@ -16,13 +16,18 @@ groups					# to see
 ```
 -> The Inception project was developed on both Mac & Debian, so it works on both platforms!
 -> To make the project work, you must have:
-	- installed `docker compose`.
+	- install `docker compose`.
 	- added `127.0.0.1 ${DOMAIN_NAME}` in your machine’s /etc/hosts file.
 	- add the login to the root group: `usermod -aG docker [login]`
 	- defined the environment variables in the `srcs/.env` file
 		- `.env` is a hidden file.
 		- values must be glued together, e.g.: `DATABASE_NAME=mariadb`.
 	- on Mac, ${HOME} is `Users/your_user`; whereas on Debian it's `/home/your_user`
+
+* To compare 2 folders :
+```
+diff -rq dossier1 dossier2
+```
 
 //	To easily copy into my VM on Debian:
 

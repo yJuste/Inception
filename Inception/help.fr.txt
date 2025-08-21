@@ -24,6 +24,11 @@ groups					# pour voir
 		- les valeurs doivent être collées, ex : `DATABASE_NAME=mariadb`.
 	- le ${HOME} de Mac est `Users/votre_user` ; contrairement à Debian où c'est `/home/votre_user`
 
+* Pour comparer 2 dossiers :
+```
+diff -rq dossier1 dossier2
+```
+
 //	Pour copier facilement dans ma VM sur Debian :
 
 -> Aussi, ce sont toutes les variables d'environnement à compléter pour lancer Inception sur votre machine.
